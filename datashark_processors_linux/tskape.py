@@ -21,7 +21,7 @@ class TSKAPEProcessor(ProcessorInterface, metaclass=ProcessorMeta):
     Run tskape on given filepath
     """
 
-    def _run(
+    async def _run(
         self, filepath: Path, arguments: List[ProcessorArgument]
     ) -> Tuple[bool, Optional[str]]:
         """Process a file using tskape"""
@@ -29,7 +29,8 @@ class TSKAPEProcessor(ProcessorInterface, metaclass=ProcessorMeta):
         details = None
         try:
             # TODO: perform artifact processing here
-            raise NotImplementedError()
+            print(filepath)
+            print(arguments)
             # commit data added by plugin (if needed)
             #self.session.commit()
             # finally set overall processing status to SUCCESS
