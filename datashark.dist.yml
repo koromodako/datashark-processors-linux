@@ -1,0 +1,8 @@
+datashark:
+  processors: #----------------------------------------------------[PROCESSORS]
+    psort:
+      bin: /usr/bin/psort.py
+    tskape:
+      bin: /opt/dfirtk/tskape/tskape
+    log2timeline:
+      bin: /usr/bin/log2timeline.py

@@ -1,8 +1,7 @@
 """Datashark log2timeline.py Processor
 """
-from typing import List, Tuple, Optional
-from pathlib import Path
-from asyncio import PIPE, DEVNULL
+from typing import List
+from asyncio.subprocess import PIPE, DEVNULL
 from datashark_core.meta import ProcessorMeta
 from datashark_core.logging import LOGGING_MANAGER
 from datashark_core.processor import ProcessorInterface, ProcessorError
@@ -35,9 +34,8 @@ class Log2TimelineProcessor(ProcessorInterface, metaclass=ProcessorMeta):
             'description': """
                 Names of forensic artifact definitions, provided in a file with one artifact name per line. Forensic
                 artifacts are stored in .yaml files that are directly pulled from the artifact definitions project.
-                You can also specify a custom artifacts yaml file (see --custom_artifact_definitions). Artifact
-                definitions can be used to describe and quickly collect data of interest, such as specific files or
-                Windows Registry keys
+                You can also specify an artifacts yaml file (see artifact_definitions). Artifact definitions can be
+                used to describe and quickly collect data of interest, such as specific files or Windows Registry keys
             """,
         },
         {
@@ -67,7 +65,6 @@ class Log2TimelineProcessor(ProcessorInterface, metaclass=ProcessorMeta):
                 Define a list of hashers to use by the tool. This is a comma separated list where each entry is the name
                 of a hasher, such as "md5,sha256". "all" indicates that all hashers should be enabled. "none" disables
                 all hashers.
-                Use "--hashers list" or "--info" to list the available hashers
             """,
         },
         {
@@ -81,7 +78,6 @@ class Log2TimelineProcessor(ProcessorInterface, metaclass=ProcessorMeta):
                 enables the linux preset, without the bash_history parser. "sqlite,!sqlite/chrome_history" enables all
                 sqlite plugins except for chrome_history". "win7,syslog" enables the win7 preset, as well as the syslog
                 parser.
-                Use "--parsers list" or "--info" to list available presets, parsers and plugins
             """,
         },
         {
@@ -169,7 +165,7 @@ class Log2TimelineProcessor(ProcessorInterface, metaclass=ProcessorMeta):
     """
 
     async def _run(self, arguments: List[ProcessorArgument]):
-        """Process a file using tskape"""
+        """Process a file using log2timeline.py"""
         # invoke subprocess
         proc = await self._start_subprocess(
             'datashark.processors.log2timeline.bin',
