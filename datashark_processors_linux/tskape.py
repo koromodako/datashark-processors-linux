@@ -1,6 +1,6 @@
 """Datashark TSKAPE Processor
 """
-from typing import List
+from typing import Dict
 from pathlib import Path
 from datashark_core.meta import ProcessorMeta
 from datashark_core.logging import LOGGING_MANAGER
@@ -21,9 +21,9 @@ class TSKAPEProcessor(ProcessorInterface, metaclass=ProcessorMeta):
     Run tskape on given filepath
     """
 
-    async def _run(self, arguments: List[ProcessorArgument]):
+    async def _run(self, arguments: Dict[str, ProcessorArgument]):
         """Process a file using tskape"""
         # TODO: perform artifact processing here
-        print(arguments)
+        raise ProcessorError("not implemented!")
         # commit data added by plugin (if needed)
-        #self.session.commit()
+        # self.session.commit()

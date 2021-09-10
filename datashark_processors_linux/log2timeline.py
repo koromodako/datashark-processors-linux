@@ -1,6 +1,6 @@
 """Datashark log2timeline.py Processor
 """
-from typing import List
+from typing import Dict
 from asyncio.subprocess import PIPE, DEVNULL
 from datashark_core.meta import ProcessorMeta
 from datashark_core.logging import LOGGING_MANAGER
@@ -164,7 +164,7 @@ class Log2TimelineProcessor(ProcessorInterface, metaclass=ProcessorMeta):
     Run log2timeline with given arguments
     """
 
-    async def _run(self, arguments: List[ProcessorArgument]):
+    async def _run(self, arguments: Dict[str, ProcessorArgument]):
         """Process a file using log2timeline.py"""
         # invoke subprocess
         proc = await self._start_subprocess(
