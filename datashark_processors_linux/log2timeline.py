@@ -4,8 +4,10 @@ from typing import Dict
 from asyncio.subprocess import PIPE, DEVNULL
 from datashark_core.meta import ProcessorMeta
 from datashark_core.logging import LOGGING_MANAGER
-from datashark_core.processor import ProcessorInterface, ProcessorError
+from datashark_core.datetime import now
+from datashark_core.processor import ProcessorInterface
 from datashark_core.model.api import Kind, System, ProcessorArgument
+from datashark_core.filesystem import prepend_workdir, ensure_parent_dir
 
 NAME = 'linux_log2timeline'
 LOGGER = LOGGING_MANAGER.get_logger(NAME)
@@ -167,9 +169,12 @@ class Log2TimelineProcessor(ProcessorInterface, metaclass=ProcessorMeta):
     async def _run(self, arguments: Dict[str, ProcessorArgument]):
         """Process a file using log2timeline.py"""
         # invoke subprocess
+        timestamp = now('%Y%m%dT%H%M%S')
+        logpath = prepend_workdir(self.config, f'logs/log2timeline-{timestamp}.log.gz')
+        ensure_parent_dir(logpath)
         proc = await self._start_subprocess(
             'datashark.processors.log2timeline.bin',
-            ['-q', '-u'],
+            ['-q', '-u', '--log-file', str(logpath)],
             [
                 # optional
                 ('artifact_definitions', '--artifact-definitions'),
