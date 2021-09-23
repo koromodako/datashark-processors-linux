@@ -170,7 +170,9 @@ class Log2TimelineProcessor(ProcessorInterface, metaclass=ProcessorMeta):
         """Process a file using log2timeline.py"""
         # invoke subprocess
         timestamp = now('%Y%m%dT%H%M%S')
-        logpath = prepend_workdir(self.config, f'logs/log2timeline-{timestamp}.log.gz')
+        logpath = prepend_workdir(
+            self.config, f'logs/log2timeline-{timestamp}.log.gz'
+        )
         ensure_parent_dir(logpath)
         proc = await self._start_subprocess(
             'datashark.processors.log2timeline.bin',
