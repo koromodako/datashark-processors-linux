@@ -30,7 +30,6 @@ class TSKAPEProcessor(ProcessorInterface, metaclass=ProcessorMeta):
             'description': "Log results to this file",
         },
         {
-
             'name': 'filepath',
             'kind': Kind.PATH,
             'required': True,
